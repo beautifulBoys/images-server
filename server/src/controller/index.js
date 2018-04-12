@@ -2,16 +2,20 @@ import formidable from 'formidable'
 import fs from 'fs'
 import path from 'path'
 import {saveImgList} from '../router/func.js'
+import {rmfold} from '../lib/util.js'
 
-export const uploadFunc = async (req, res) => {
-  var form = new formidable.IncomingForm()
-  form.uploadDir = path.join(__dirname, '../../linshi')
-  let npath = path.join(__dirname, '../../resource/')
+export const uploadFunc = (req, res) => {
+  rmfold(path.join(__dirname, '../../resource/aa/'))
+  
 
-  form.parse(req, (err, fields, files) => {
-    let result = saveImgList(files, npath)
+  // var form = new formidable.IncomingForm()
+  // form.uploadDir = path.join(__dirname, '../../linshi')
+  // let npath = path.join(__dirname, '../../resource/')
+
+  // form.parse(req, (err, fields, files) => {
+  //   let result = saveImgList(files, npath)
     
-    res.send({title: 'Express', result})
+  //   res.send({title: 'Express', result})
 
-  })
+  // })
 }

@@ -1,6 +1,5 @@
 import fs from 'fs'
 import path from 'path'
-import { resolve } from 'url';
 
 // 修改名称
 const rename = (oldpath, newpath) => {
@@ -11,7 +10,6 @@ const rename = (oldpath, newpath) => {
     })
   })
 }
-
 
 // 保存图片
 const saveImgList = (files, npath) => {
@@ -29,8 +27,6 @@ const saveImgList = (files, npath) => {
     else resolve()
   })
 }
-
-
 
 export {
   rename,
