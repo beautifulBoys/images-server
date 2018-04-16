@@ -27,7 +27,7 @@ export default {
   },
   mutations: {
     avatar (state, avatar) {
-      state.avatar = avatar;
+      state.avatar = avatar
     }
   },
   actions: {
@@ -50,4 +50,4 @@ export default {
 
     }
   }
-};
+}

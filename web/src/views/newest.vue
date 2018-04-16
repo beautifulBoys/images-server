@@ -10,8 +10,8 @@
   </div>
 </template>
 <script>
-  import { createNamespacedHelpers } from 'vuex';
-  const { mapState, mapMutations, mapActions, mapGetters } = createNamespacedHelpers('box/newest');
+  import { createNamespacedHelpers } from 'vuex'
+  const { mapState, mapMutations, mapActions, mapGetters } = createNamespacedHelpers('box/newest')
   export default {
     computed: {
       ...mapState({}),
@@ -24,7 +24,7 @@
       ...mapMutations(['changePage']),
       ...mapActions(['getDataEvent'])
     }
-  };
+  }
 </script>
 
 <style lang="less" scoped>

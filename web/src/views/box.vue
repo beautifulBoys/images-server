@@ -15,8 +15,6 @@
 <script>
 import sideNenu from '../components/side_menu.vue';
 import headerComponent from '../components/header.vue';
-// import chatBox from '../components/box/box.vue';
-// import imageScan from '../components/box/image_scan.vue';
 import { createNamespacedHelpers } from 'vuex';
 const { mapState, mapMutations, mapActions } = createNamespacedHelpers('box');
 export default {

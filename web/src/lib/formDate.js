@@ -1,7 +1,7 @@
 var util = {
   // 获取年月日时分秒
   formatDateTime (cst) {
-    var num = [31, this.is_leap(cst.getFullYear()) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    var num = [31, this.is_leap(cst.getFullYear()) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     return {
       year: cst.getFullYear().toString(),
       month: this.paddNum(cst.getMonth() + 1),
@@ -11,20 +11,20 @@ var util = {
       second: this.paddNum(cst.getSeconds()).toString(),
       monthDays: num[cst.getMonth()],
       week: cst.getDay()
-    };
+    }
   },
   is_leap (year) { // 是否是闰年
-    if (((year % 4) === 0) && ((year % 100) !== 0) || ((year % 400) === 0)) return 1;
-    else return 0;
+    if (((year % 4) === 0) && ((year % 100) !== 0) || ((year % 400) === 0)) return 1
+    else return 0
   },
   // 前面补零
   paddNum (num) {
     num += '';
-    return num.replace(/^(\d)$/, '0$1');
+    return num.replace(/^(\d)$/, '0$1')
   },
   // 格式化CST日期的字串
   formatCSTDate (strDate, format) {
-    return this.formatDate(new Date(strDate), format);
+    return this.formatDate(new Date(strDate), format)
   },
   // 格式化日期,
   formatDate (date, format) {
@@ -39,11 +39,11 @@ var util = {
       hh: date.getHours(), // 时
       mm: this.paddNum(date.getMinutes()), // 分
       ss: date.getSeconds() // 秒
-    };
-    format || (format = 'yyyy-MM-dd hh:mm:ss');
+    }
+    format || (format = 'yyyy-MM-dd hh:mm:ss')
     return format.replace(/([a-z])(\1)*/ig, (m) => {
-      return cfg[m];
-    });
+      return cfg[m]
+    })
   }
-};
-export default util;
+}
+export default util

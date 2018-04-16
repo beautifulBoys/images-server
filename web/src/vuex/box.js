@@ -1,5 +1,5 @@
-import newest from './newest.js';
-import header from './header.js';
+import newest from './newest.js'
+import header from './header.js'
 
 export default {
   namespaced: true,
@@ -38,4 +38,4 @@ export default {
     newest,
     header
   }
-};
+}

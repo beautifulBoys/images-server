@@ -22,12 +22,12 @@
         username: '',
         password: '',
         toshow: true
-      };
+      }
     },
     methods: {
       loginEvent () {}
     }
-  };
+  }
 </script>
 
 <style lang="less" scoped>
