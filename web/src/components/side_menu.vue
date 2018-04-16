@@ -1,19 +1,13 @@
 <template>
   <el-row class="tac">
     <el-col :span="12">
-    <el-menu default-active="2" class="el-menu-vertical-demo"
-      @open="handleOpen" @close="handleClose"
-      :unique-opened="true" router theme="dark"
+    <el-menu default-active="1" class="el-menu-vertical-demo"
+      @open="handleOpen" @close="handleClose" :unique-opened="true" router
+      background-color="#eef1f6" active-text-color="#409EFF"
     >
       <div class="logo"></div>
-      <el-menu-item index="/"><i class="el-icon-setting"></i>首页</el-menu-item>
       <template v-for="(item, index) in menuList">
-        <el-submenu :index="index + ''">
-          <template slot="title"><i class="el-icon-message"></i>{{item.text}}</template>
-          <el-menu-item-group>
-            <el-menu-item :index="item1.path" :key="index1" v-for="(item1, index1) in item.list">{{item1.text}}</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
+        <el-menu-item index="/newest"><i class="el-icon-setting"></i>首页</el-menu-item>
       </template>
     </el-menu>
   </el-col>
@@ -28,9 +22,7 @@
         menuList: [
           {
             text: '逛圈子',
-            list: [
-              {path: 'newest', text: '最新动态'}
-            ]
+            path: 'newest'
           }
         ]
       };
@@ -44,15 +36,13 @@
 <style lang="less" scoped>
 .logo {
   width: 100%;
-  line-height: 80px;
   text-align: center;
-  height: 80px;
+  height: 60px;
   color: #20A0FF;
   font-size: 30px;
   font-family: "微软雅黑";
-  border-bottom: 1px solid #000;
-  background: url(../images/logo.png) no-repeat center center;
-  background-size: 120px;
+  background: url(../images/logo1.png) no-repeat center center;
+  background-size: 200px;
   cursor: pointer;
 }
 .el-col-12 {
@@ -67,4 +57,10 @@
   padding-top: 0;
   padding-bottom: 0;
 }
+</style>
+<style>
+  .el-menu-item {
+    line-height: 50px;
+    height: 50px;
+  }
 </style>

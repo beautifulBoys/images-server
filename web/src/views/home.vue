@@ -1,11 +1,32 @@
 <template>
   <div class="home">
-    <input type="file" ref="file" multiple="multiple" />
-    <div class="btn" @click="upladFile()">上传</div>
+    <div class="header">
+      <el-button-group class="btn-group">
+        <el-button type="primary" size="medium" icon="el-icon-upload2">上传</el-button>
+      </el-button-group>
+      <el-button-group class="btn-group">
+        <el-button size="medium" icon="el-icon-upload2">新建文件夹</el-button>
+      </el-button-group>
+      <el-button-group class="btn-group">
+        <el-button icon="el-icon-download" size="medium">下载</el-button>
+        <el-button icon="el-icon-delete" size="medium">复制</el-button>
+        <el-button icon="el-icon-rank" size="medium">移动</el-button>
+        <el-button icon="el-icon-delete" size="medium">删除</el-button>
+      </el-button-group>
+    </div>
+    <div class="bread">
+      <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item :to="{path: '/'}">首页</el-breadcrumb-item>
+        <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+        <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+        <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+        <span class="status">已全部加载，共65个</span>
+      </el-breadcrumb>
+    </div>
+
   </div>
 </template>
 <script>
-import {uploadAjax} from '../api/ajax_router.js'
   export default {
     data () {
       return {
@@ -16,39 +37,30 @@ import {uploadAjax} from '../api/ajax_router.js'
 
     },
     methods: {
-      upladFile () {
-        var files = this.$refs.file.files
-        var formData = new FormData()
-        for (let i = 0; i < files.length; i++) {
-          formData.append('file' + i, files[i])
-        }
-        uploadAjax(formData).then(res => {
-          console.log(res)
-        }).catch(err => {
-          console.log(err)
-        })
-      },
-      cancleUploadFile () {
-        this.xhr.abort()
-      }
+
     }
   }
 </script>
 
 <style lang="less" scoped>
   .home {
-    box-sizing: border-box;
-    padding: 20px 30px;
-    .btn {
-      width: 100px;
-      line-height: 30px;
-      background: green;
-      text-align: center;
-      color: #fff;
-      margin-top: 20px;
-      cursor: pointer;
-      &:hover {
-        opacity: 0.8;
+    width: 100%;
+    .header {
+      width: 100%;
+      padding: 10px 10px;
+      box-sizing: border-box;
+      .btn-group {
+        margin-right: 10px;
+      }
+    }
+    .bread {
+      width: 100%;
+      padding: 5px 15px;
+      box-sizing: border-box;
+      .status {
+        float: right;
+        font-size: 14px;
+        color: #606266;
       }
     }
   }

@@ -134,8 +134,8 @@ const { mapState, mapMutations, mapActions } = createNamespacedHelpers('box/head
 <style lang="less" scoped>
 .header {
     height: 60px;
-    background: #20A0FF;
-    box-shadow: 0 5px 7px rgba(0,0,0,0.2);
+    background: #eef1f6;
+    // box-shadow: 0 5px 7px rgba(0,0,0,0.2);
     z-index: 10;
     padding: 10px;
     box-sizing: border-box;

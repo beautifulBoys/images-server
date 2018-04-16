@@ -2,6 +2,9 @@ import Vue from 'vue'
 import {
   Dialog,
   Button,
+  ButtonGroup,
+  Breadcrumb,
+  BreadcrumbItem,
   Form,
   Dropdown,
   DropdownMenu,
@@ -34,11 +37,14 @@ import {
   MessageBox,
   Tooltip
 } from 'element-ui'
-import 'element-ui/lib/theme-default/index.css'
+import 'element-ui/lib/theme-chalk/index.css'
 
 export default () => {
   Vue.use(Dialog)
   Vue.use(Button)
+  Vue.use(ButtonGroup)
+  Vue.use(Breadcrumb)
+  Vue.use(BreadcrumbItem)
   Vue.use(Form)
   Vue.use(Dropdown)
   Vue.use(DropdownMenu)
