@@ -3,7 +3,7 @@
     <el-col :span="12">
     <el-menu default-active="1" class="el-menu-vertical-demo"
       @open="handleOpen" @close="handleClose" :unique-opened="true" router
-      background-color="#eef1f6" active-text-color="#409EFF"
+      background-color="#eff4f8" active-text-color="#409EFF"
     >
       <div class="logo"></div>
       <template v-for="(item, index) in menuList">
@@ -20,10 +20,12 @@
       return {
         defaultActive: '1',
         menuList: [
-          {
-            text: '逛圈子',
-            path: 'newest'
-          }
+          { text: '全部', path: 'all' },
+          { text: '图片', path: 'image' },
+          { text: '文档', path: 'doc' },
+          { text: '视频', path: 'video' },
+          { text: '音乐', path: 'music' },
+          { text: '压缩包', path: 'zip' }
         ]
       };
     },
@@ -35,6 +37,9 @@
 </script>
 <style lang="less" scoped>
 .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   text-align: center;
   height: 60px;
@@ -51,16 +56,15 @@
 .el-menu.el-menu-vertical-demo {
   border: none;
 }
+
 </style>
 <style>
 .el-menu-item-group__title {
   padding-top: 0;
   padding-bottom: 0;
 }
-</style>
-<style>
-  .el-menu-item {
-    line-height: 50px;
-    height: 50px;
-  }
+.el-menu-item {
+  line-height: 50px;
+  height: 50px;
+}
 </style>

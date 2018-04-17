@@ -59,10 +59,10 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
-  background: #eef1f6;
+  background: #eff4f8;
   .left-container {
     width: 220px;
-    background: #eef1f6;
+    background: #eff4f8;
     overflow-y: auto;
   }
   .right-container {
