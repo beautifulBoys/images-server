@@ -10,6 +10,9 @@
       return {
         imgDom: null
       }
+    },
+    created () {
+
     }
   }
 </script>
