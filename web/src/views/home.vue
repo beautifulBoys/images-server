@@ -23,11 +23,17 @@
         <span class="status">已全部加载，共65个</span>
       </el-breadcrumb>
     </div>
-
+    <div class="box">
+      <image-item v-for="item in 11"></image-item>
+    </div>
   </div>
 </template>
 <script>
+import imageItem from '../components/item.vue'
   export default {
+    components: {
+      'image-item': imageItem
+    },
     data () {
       return {
         status: false
@@ -45,6 +51,9 @@
 <style lang="less" scoped>
   .home {
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
     .header {
       width: 100%;
       padding: 10px 10px;
@@ -55,13 +64,20 @@
     }
     .bread {
       width: 100%;
-      padding: 5px 15px;
+      padding: 5px 15px 10px 15px;
       box-sizing: border-box;
+      border-bottom: 1px solid #eee;
       .status {
         float: right;
         font-size: 14px;
         color: #606266;
       }
+    }
+    .box {
+      width: 100%;
+      flex: 1;
+      padding: 10px;
+      box-sizing: border-box;
     }
   }
 </style>
