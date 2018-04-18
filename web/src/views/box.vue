@@ -89,3 +89,8 @@ export default {
   }
 }
 </style>
+<style lang="less">
+  i {
+    font-weight: 800!important;
+  }
+</style>

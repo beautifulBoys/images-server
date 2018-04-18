@@ -2,16 +2,17 @@
   <div class="home">
     <div class="header">
       <el-button-group class="btn-group">
-        <el-button type="primary" size="medium" icon="el-icon-upload2">上传</el-button>
+        <!-- <el-button type="primary" size="medium" icon="el-icon-upload2">上传</el-button> -->
+        <el-button type="primary" size="small" icon="el-icon-upload2">上传</el-button>
       </el-button-group>
       <el-button-group class="btn-group">
-        <el-button size="medium" icon="el-icon-upload2">新建文件夹</el-button>
+        <el-button size="small" icon="el-icon-upload2">新建文件夹</el-button>
       </el-button-group>
       <el-button-group class="btn-group">
-        <el-button icon="el-icon-download" size="medium">下载</el-button>
-        <el-button icon="el-icon-delete" size="medium">复制</el-button>
-        <el-button icon="el-icon-rank" size="medium">移动</el-button>
-        <el-button icon="el-icon-delete" size="medium">删除</el-button>
+        <el-button icon="el-icon-download" size="small">下载</el-button>
+        <el-button icon="el-icon-delete" size="small">复制</el-button>
+        <el-button icon="el-icon-rank" size="small">移动</el-button>
+        <el-button icon="el-icon-delete" size="small">删除</el-button>
       </el-button-group>
     </div>
     <div class="bread">
@@ -23,20 +24,25 @@
         <span class="status">已全部加载，共65个</span>
       </el-breadcrumb>
     </div>
-    <div class="box">
-      <image-item v-for="item in 11"></image-item>
+    <div class="content" style="height: calc(100% - 82px)">
+      <div class="box">
+        <template v-for="item in 11">
+          <image-item :data="item"></image-item>
+        </template>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import imageItem from '../components/item.vue'
+import imageItem from '../components/image_item.vue'
   export default {
     components: {
       'image-item': imageItem
     },
     data () {
       return {
-        status: false
+        status: false,
+        list: []
       }
     },
     mounted () {
@@ -52,8 +58,6 @@ import imageItem from '../components/item.vue'
   .home {
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-flow: column;
     .header {
       width: 100%;
       padding: 10px 10px;
@@ -73,11 +77,15 @@ import imageItem from '../components/item.vue'
         color: #606266;
       }
     }
-    .box {
+    .content {
       width: 100%;
-      flex: 1;
       padding: 10px;
+      overflow-y: scroll;
       box-sizing: border-box;
+      .box {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 </style>

@@ -1,31 +1,25 @@
 <template>
-  <el-row class="tac">
-    <el-col :span="12">
-    <el-menu default-active="1" class="el-menu-vertical-demo"
-      @open="handleOpen" @close="handleClose" :unique-opened="true" router
-      background-color="#eff4f8" active-text-color="#409EFF"
-    >
-      <div class="logo"></div>
-      <template v-for="(item, index) in menuList">
-        <el-menu-item index="/newest"><i class="el-icon-setting"></i>首页</el-menu-item>
-      </template>
-    </el-menu>
-  </el-col>
-
-  </el-row>
+  <div class="side-menu">
+    <div class="logo"></div>
+    <div class="menu-item" @click="defaultActive = index"
+      :class="{active: defaultActive === index}" v-for="(item, index) in menuList">
+      <div class="icon"><i :class="item.class"></i></div>
+      <div class="text">{{item.text}}</div>
+    </div>
+  </div>
 </template>
 <script>
   export default {
     data () {
       return {
-        defaultActive: '1',
+        defaultActive: 0,
         menuList: [
-          { text: '全部', path: 'all' },
-          { text: '图片', path: 'image' },
-          { text: '文档', path: 'doc' },
-          { text: '视频', path: 'video' },
-          { text: '音乐', path: 'music' },
-          { text: '压缩包', path: 'zip' }
+          { text: '全部', path: 'all', class: 'el-icon-menu' },
+          { text: '图片', path: 'image', class: 'el-icon-picture' },
+          { text: '文档', path: 'doc', class: '' },
+          { text: '视频', path: 'video', class: '' },
+          { text: '音乐', path: 'music', class: '' },
+          { text: '压缩包', path: 'zip', class: '' }
         ]
       };
     },
@@ -36,35 +30,42 @@
   };
 </script>
 <style lang="less" scoped>
-.logo {
+.side-menu {
+  width: 100%;
+  height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  text-align: center;
-  height: 60px;
-  color: #20A0FF;
-  font-size: 30px;
-  font-family: "微软雅黑";
-  background: url(../images/logo1.png) no-repeat center center;
-  background-size: 200px;
-  cursor: pointer;
-}
-.el-col-12 {
-  width: 100%;
-}
-.el-menu.el-menu-vertical-demo {
-  border: none;
+  flex-flow: column;
+  .logo {
+    width: 100%;
+    height: 70px;
+    background: url(../images/logo.png) no-repeat center center;
+    background-size: 90% auto;
+  }
+  .menu-item {
+    line-height: 50px;
+    padding: 0 30px;
+    font-size: 15px;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    .icon {
+      width: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .text {
+      flex: 1;
+    }
+    &:hover {
+      background: rgba(59, 140, 255, 0.1);
+    }
+    &.active {
+      color: #3b8cff;
+      background: rgba(59, 140, 255, 0.1);
+    }
+  }
 }
 
-</style>
-<style>
-.el-menu-item-group__title {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.el-menu-item {
-  line-height: 50px;
-  height: 50px;
-}
+
 </style>
