@@ -24,10 +24,21 @@ const saveImgList = (files, npath) => {
       }
     }
     if (result.length) reject(result)
-    else resolve()
+    else resolve(npath + file.name)
   })
 }
 
+// 文件操作
+const readFile = (path) => {
+  return new Promise((resolve, reject) => {
+    try {
+      var data = fs.readFileSync(path)
+      reject(data)
+    } catch (err) {
+      resolve(err)
+    }
+  })
+}
 export {
   rename,
   saveImgList
