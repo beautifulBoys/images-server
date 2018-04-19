@@ -13,7 +13,10 @@ export default {
     }
   },
   created () {
-
+    this.$store.commit('size/clientSize', {
+      clientHeight: document.body.clientHeight,
+      clientWidth: document.body.clientWidth
+    })
   }
 }
 </script>

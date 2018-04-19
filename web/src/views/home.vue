@@ -2,7 +2,6 @@
   <div class="home">
     <div class="header">
       <el-button-group class="btn-group">
-        <!-- <el-button type="primary" size="medium" icon="el-icon-upload2">上传</el-button> -->
         <el-button type="primary" size="small" icon="el-icon-upload2">上传</el-button>
       </el-button-group>
       <el-button-group class="btn-group">
@@ -24,17 +23,17 @@
         <span class="status">已全部加载，共65个</span>
       </el-breadcrumb>
     </div>
-    <div class="content" style="height: calc(100% - 82px)">
-      <div class="box">
-        <template v-for="item in 11">
-          <image-item :data="item"></image-item>
-        </template>
-      </div>
+    <div class="content" :style="`height: ${scrollHeight}px`">
+      <template v-for="item in list">
+        <image-item :data="item"></image-item>
+      </template>
     </div>
   </div>
 </template>
 <script>
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import imageItem from '../components/image_item.vue'
+import list from './data.js'
   export default {
     components: {
       'image-item': imageItem
@@ -45,8 +44,18 @@ import imageItem from '../components/image_item.vue'
         list: []
       }
     },
+    computed: {
+      scrollHeight () {
+        return this.$store.state.size.clientHeight - 144
+      }
+    },
     mounted () {
-
+      for (let i = 0; i < list.length; i++) {
+        this.list.push({
+          ...list[i],
+          selected: false
+        })
+      }
     },
     methods: {
 
@@ -82,10 +91,33 @@ import imageItem from '../components/image_item.vue'
       padding: 10px;
       overflow-y: scroll;
       box-sizing: border-box;
-      .box {
-        width: 100%;
-        height: 100%;
-      }
+
+
+      // .box {
+      //   width: 100%;
+      //   height: 100%;
+      // }
     }
   }
+</style>
+<style>
+::-webkit-scrollbar {
+  width: 10px;
+}
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
+  background: #f6f5f5;
+}
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+  background: rgba(59, 140, 255, 0.1);
+}
+::-webkit-scrollbar-thumb:hover {
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.4);
+  background: rgba(59, 140, 255, 0.2);
+}
 </style>

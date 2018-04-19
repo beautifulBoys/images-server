@@ -1,7 +1,7 @@
 import formidable from 'formidable'
 import fs from 'fs'
 import path from 'path'
-import sleep from 'sleep'
+// import sleep from 'sleep'
 import Id from '../model/id.js'
 import User from '../model/user.js'
 import {saveImgList, rm} from '../lib/fs_func.js'
@@ -19,7 +19,7 @@ const mmmm = new Mq()
 async function fn (res, resolve) {
   await Id.update({type: 'userId'}, {$inc: {value: +1}}, {multi: false}, () => {})
   let obj = await Id.findOne({type: 'userId'})
-  sleep.sleep(2)
+  // sleep.sleep(2)
   // 创建 user 表
   await User.create({id: obj.value + 1}, (err, docs) => {
     if (err) console.log('create user 出错了', err)
