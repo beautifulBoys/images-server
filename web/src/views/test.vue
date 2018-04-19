@@ -2,16 +2,12 @@
   <div class="home">
     <input type="file" ref="file" multiple="multiple" />
     <div class="btn" @click="upladFile()">上传</div>
+    <div class="btn" @click="test()">测试</div>
   </div>
 </template>
 <script>
-import {uploadAjax} from '../api/ajax_router.js'
+import {uploadAjax, testAjax} from '../api/ajax_router.js'
   export default {
-    data () {
-      return {
-        status: false
-      }
-    },
     mounted () {
 
     },
@@ -30,6 +26,18 @@ import {uploadAjax} from '../api/ajax_router.js'
       },
       cancleUploadFile () {
         this.xhr.abort()
+      },
+      test () {
+        for (let i = 0; i < 20; i++) {
+          this.ajax()
+        }
+      },
+      ajax () {
+        testAjax().then(res => {
+          console.log(res)
+        }).catch(err => {
+          console.log(err)
+        })
       }
     }
   }

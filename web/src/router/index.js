@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Box from '@/views/box.vue'
 import Login from '@/views/login.vue'
 import home from '@/views/home.vue'
+import test from '@/views/test.vue'
 
 const Newest = () => import('@/views/newest.vue')
 
@@ -25,6 +26,10 @@ export default new Router({
     {
       path: '/upload',
       component: home
+    },
+    {
+      path: '/test',
+      component: test
     }
   ]
 })

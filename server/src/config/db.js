@@ -2,7 +2,7 @@
 import mongoose from 'mongoose'
 
 function dbconnect () {
-  mongoose.connect('mongodb://127.0.0.1:27017/tourism', {useMongoClient: true})
+  mongoose.connect('mongodb://127.0.0.1:27017/test', {useMongoClient: true})
   var db = mongoose.connection
   db.on('error', () => {
     console.log('数据库连接出错。')
