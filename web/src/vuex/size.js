@@ -9,7 +9,14 @@ export default {
   namespaced: true,
   state: {
     clientWidth: 0,
-    clientHeight: 0
+    clientHeight: 0,
+    select_area: {
+      status: false, // 是否开始勾选了
+      x: 0,
+      y: 0,
+      endX: 0,
+      endY: 0
+    }
   },
   mutations: {
     clientSize (state, {clientWidth, clientHeight}) {
@@ -19,6 +26,13 @@ export default {
         state.clientWidth = document.body.clientWidth
         state.clientHeight = document.body.clientHeight
       }
+    },
+    select_area_change (state, {status, endX, endY, x, y}) {
+      if (status) state.select_area.status = status
+      if (x) state.select_area.x = x
+      if (y) state.select_area.y = y
+      if (endY) state.select_area.endY = endY
+      if (endX) state.select_area.endX = endX
     }
   },
   actions: {

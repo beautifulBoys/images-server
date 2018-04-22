@@ -1,7 +1,7 @@
 <template>
   <div class="item-box" :class="{selected: data.selected}">
     <div class="item">
-      <div class="gou" @click="data.selected = true"><i class="el-icon-check"></i></div>
+      <div class="gou" @click="data.selected = !data.selected"><i class="el-icon-check"></i></div>
       <img v-if="data.type === '1'" class="image" src="../images/dir.png" />
       <img v-if="data.type === '2'" class="image" src="../images/img.png" />
       <img v-if="data.type === '3'" class="image" src="../images/doc.png" />

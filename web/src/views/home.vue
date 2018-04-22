@@ -23,10 +23,13 @@
         <span class="status">已全部加载，共65个</span>
       </el-breadcrumb>
     </div>
-    <div class="content" :style="`height: ${scrollHeight}px`">
+    <div class="content" :style="`height: ${scrollHeight}px`" ref="box_content">
       <template v-for="item in list">
         <image-item :data="item"></image-item>
       </template>
+    </div>
+    <div class="select-area" v-show="select_area.endX - select_area.x > 0 && select_area.endY - select_area.y > 0 && select_area.status"
+      :style="`width: ${select_area.endX - select_area.x}px; height: ${select_area.endY - select_area.y}px; top: ${select_area.y}px; left: ${select_area.x}px`">
     </div>
   </div>
 </template>
@@ -47,18 +50,58 @@ import list from './data.js'
     computed: {
       scrollHeight () {
         return this.$store.state.size.clientHeight - 144
-      }
+      },
+      ...mapState({
+        select_area: state => state.size.select_area
+      })
     },
     mounted () {
-      for (let i = 0; i < list.length; i++) {
-        this.list.push({
-          ...list[i],
-          selected: false
+      this.$refs.box_content.onmousedown = (e) => {
+        console.log(e)
+        this.select_area_change({
+          status: true,
+          x: e.clientX,
+          y: e.clientY
         })
+      }
+      document.onmousemove = (e) => {
+        if (this.select_area.status) {
+          console.log(e)
+          this.select_area_change({
+            endX: e.clientX,
+            endY: e.clientY
+          })
+        }
+      }
+      document.onmouseup = (e) => {
+        console.log(e)
+        this.select_area_change({
+          endX: 0,
+          endY: 0,
+          x: 0,
+          y: 0,
+          status: false
+        })
+      }
+      for (let i = 0; i < list.length; i++) {
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
       }
     },
     methods: {
-
+      ...mapMutations({
+        select_area_change: 'size/select_area_change'
+      })
     }
   }
 </script>
@@ -91,13 +134,13 @@ import list from './data.js'
       padding: 10px;
       overflow-y: scroll;
       box-sizing: border-box;
-
-
-      // .box {
-      //   width: 100%;
-      //   height: 100%;
-      // }
     }
+  }
+  .select-area {
+    position: fixed;
+    z-index: 1000;
+    border: 1px dashed rgb(0, 153, 255);
+    background: rgba(0, 153, 255, 0.15);
   }
 </style>
 <style>
