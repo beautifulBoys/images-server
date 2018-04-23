@@ -14,16 +14,20 @@ import Mq from '../lib/mq.js'
 
 */
 
-
+let index = 0
 const mmmm = new Mq()
-async function fn (res, resolve) {
+async function fn (res, resolve, reject) {
   await Id.update({type: 'userId'}, {$inc: {value: +1}}, {multi: false}, () => {})
   let obj = await Id.findOne({type: 'userId'})
-  sleep.sleep(2)
+  sleep.msleep(100)
+  index++
+  console.log('----------------ID: ' + index + '---停留了100毫秒----------------')
   // 创建 user 表
   await User.create({id: obj.value + 1}, (err, docs) => {
-    if (err) console.log('create user 出错了', err)
-    else {
+    if (err) {
+      console.log('create user 出错了', err)
+      reject(err)
+    } else {
       resolve()
       res.send({title: 'Express'})
     }
@@ -32,7 +36,7 @@ async function fn (res, resolve) {
 function  FUN (res) {
   return function () {
     return new Promise((resolve, reject) => {
-      fn(res, resolve)
+      fn(res, resolve, reject)
     })
   }
 }
@@ -53,12 +57,6 @@ export const uploadFunc = (req, res) => {
 
 export const testFunc = async (req, res) => {
   mmmm.set(new FUN(res))
-  // await Id.update({type: 'userId'}, {$inc: {value: +1}}, {multi: false}, () => {})
-  // let obj = await Id.findOne({type: 'userId'})
-  // // 创建 user 表
-  // await User.create({id: obj.value + 1}, (err, docs) => {
-  //   if (err) console.log('create user 出错了', err)
-  //   else res.send({title: 'Express'})
-  // });
+  // 现存偶发bug，跳id ，第一个 id 会重复。
 }
 

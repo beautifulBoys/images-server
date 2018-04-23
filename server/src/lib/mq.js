@@ -25,11 +25,9 @@ class Mq {
       fn().then(() => {
         this.next()
         fn = null
-        console.log('执行成功一个')
       }).catch(err => {
         console.log(err)
         fn = null
-        console.log('执行出错一个')
       })
     }
   }
