@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './vuex/index.js'
-
+import './assets/app.less'
 import projectConfig from './config.js'
 
 Vue.config.productionTip = false

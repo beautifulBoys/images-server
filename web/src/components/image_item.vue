@@ -1,9 +1,14 @@
 <template>
   <div class="item-box" :class="{selected: data.selected}">
     <div class="item">
-      <div class="gou"><i class="el-icon-check"></i></div>
-      <img class="image" src="../images/fold.png" />
-      <div class="text">哈哈哈哈哈</div>
+      <div class="gou" @click="data.selected = !data.selected"><i class="el-icon-check"></i></div>
+      <img v-if="data.type === '1'" class="image" src="../images/dir.png" />
+      <img v-if="data.type === '2'" class="image" src="../images/img.png" />
+      <img v-if="data.type === '3'" class="image" src="../images/doc.png" />
+      <img v-if="data.type === '4'" class="image" src="../images/video.png" />
+      <img v-if="data.type === '5'" class="image" src="../images/music.png" />
+      <img v-if="data.type === '6'" class="image" src="../images/zip.png" />
+      <div class="text">{{data.fullName}}</div>
     </div>
   </div>
 </template>
@@ -80,6 +85,12 @@
       color: #333;
       line-height: 30px;
       text-align: center;
+      height: 30px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1; // 超出行数
+      overflow: hidden;
+
     }
   }
 }

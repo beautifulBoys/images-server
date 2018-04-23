@@ -2,7 +2,6 @@
   <div class="home">
     <div class="header">
       <el-button-group class="btn-group">
-        <!-- <el-button type="primary" size="medium" icon="el-icon-upload2">上传</el-button> -->
         <el-button type="primary" size="small" icon="el-icon-upload2">上传</el-button>
       </el-button-group>
       <el-button-group class="btn-group">
@@ -24,17 +23,20 @@
         <span class="status">已全部加载，共65个</span>
       </el-breadcrumb>
     </div>
-    <div class="content" style="height: calc(100% - 82px)">
-      <div class="box">
-        <template v-for="item in 11">
-          <image-item :data="item"></image-item>
-        </template>
-      </div>
+    <div class="content" :style="`height: ${scrollHeight}px`" ref="box_content">
+      <template v-for="item in list">
+        <image-item :data="item"></image-item>
+      </template>
+    </div>
+    <div class="select-area" v-show="select_area.endX - select_area.x > 0 && select_area.endY - select_area.y > 0 && select_area.status"
+      :style="`width: ${select_area.endX - select_area.x}px; height: ${select_area.endY - select_area.y}px; top: ${select_area.y}px; left: ${select_area.x}px`">
     </div>
   </div>
 </template>
 <script>
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import imageItem from '../components/image_item.vue'
+import list from './data.js'
   export default {
     components: {
       'image-item': imageItem
@@ -45,11 +47,61 @@ import imageItem from '../components/image_item.vue'
         list: []
       }
     },
+    computed: {
+      scrollHeight () {
+        return this.$store.state.size.clientHeight - 144
+      },
+      ...mapState({
+        select_area: state => state.size.select_area
+      })
+    },
     mounted () {
-
+      this.$refs.box_content.onmousedown = (e) => {
+        console.log(e)
+        this.select_area_change({
+          status: true,
+          x: e.clientX,
+          y: e.clientY
+        })
+      }
+      document.onmousemove = (e) => {
+        if (this.select_area.status) {
+          console.log(e)
+          this.select_area_change({
+            endX: e.clientX,
+            endY: e.clientY
+          })
+        }
+      }
+      document.onmouseup = (e) => {
+        console.log(e)
+        this.select_area_change({
+          endX: 0,
+          endY: 0,
+          x: 0,
+          y: 0,
+          status: false
+        })
+      }
+      for (let i = 0; i < list.length; i++) {
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+        this.list.push({ ...list[i], selected: false })
+      }
     },
     methods: {
-
+      ...mapMutations({
+        select_area_change: 'size/select_area_change'
+      })
     }
   }
 </script>
@@ -82,10 +134,33 @@ import imageItem from '../components/image_item.vue'
       padding: 10px;
       overflow-y: scroll;
       box-sizing: border-box;
-      .box {
-        width: 100%;
-        height: 100%;
-      }
     }
   }
+  .select-area {
+    position: fixed;
+    z-index: 1000;
+    border: 1px dashed rgb(0, 153, 255);
+    background: rgba(0, 153, 255, 0.15);
+  }
+</style>
+<style>
+::-webkit-scrollbar {
+  width: 10px;
+}
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
+  background: #f6f5f5;
+}
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+  background: rgba(59, 140, 255, 0.1);
+}
+::-webkit-scrollbar-thumb:hover {
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.4);
+  background: rgba(59, 140, 255, 0.2);
+}
 </style>
