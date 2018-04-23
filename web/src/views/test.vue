@@ -28,7 +28,7 @@ import {uploadAjax, testAjax} from '../api/ajax_router.js'
         this.xhr.abort()
       },
       test () {
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 20; i++) {
           this.ajax()
         }
       },
