@@ -28,8 +28,8 @@
         <image-item :data="item"></image-item>
       </template>
     </div>
-    <div class="select-area" v-show="select_area.endX - select_area.x > 0 && select_area.endY - select_area.y > 0 && select_area.status"
-      :style="`width: ${select_area.endX - select_area.x}px; height: ${select_area.endY - select_area.y}px; top: ${select_area.y}px; left: ${select_area.x}px`">
+    <div class="select-area" v-show="Math.abs(select_area.endX - select_area.x) > 0 && Math.abs(select_area.endY - select_area.y) > 0 && select_area.status"
+      :style="`width: ${Math.abs(select_area.endX - select_area.x)}px; height: ${Math.abs(select_area.endY - select_area.y)}px; top: ${select_area.y}px; left: ${select_area.x}px`">
     </div>
   </div>
 </template>
@@ -57,23 +57,24 @@ import list from './data.js'
     },
     mounted () {
       this.$refs.box_content.onmousedown = (e) => {
-        console.log(e)
+        // console.log(e)
         this.select_area_change({
           status: true,
           x: e.clientX,
           y: e.clientY
         })
       }
-      document.onmousemove = (e) => {
+      this.$refs.box_content.onmousemove = (e) => {
         if (this.select_area.status) {
-          console.log(e)
+          // console.log(e)
           this.select_area_change({
             endX: e.clientX,
-            endY: e.clientY
+            endY: e.clientY,
+            status: true
           })
         }
       }
-      document.onmouseup = (e) => {
+      document.body.onmouseup = (e) => {
         console.log(e)
         this.select_area_change({
           endX: 0,

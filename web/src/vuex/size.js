@@ -28,6 +28,7 @@ export default {
       }
     },
     select_area_change (state, {status, endX, endY, x, y}) {
+      console.log({status, endX, endY, x, y})
       if (status) state.select_area.status = status
       if (x) state.select_area.x = x
       if (y) state.select_area.y = y
