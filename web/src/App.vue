@@ -17,6 +17,9 @@ export default {
       clientHeight: document.body.clientHeight,
       clientWidth: document.body.clientWidth
     })
+    document.oncontextmenu = () => {
+      return false
+    }
   }
 }
 </script>

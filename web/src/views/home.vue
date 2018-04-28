@@ -25,11 +25,11 @@
     </div>
     <div class="content" :style="`height: ${scrollHeight}px`" ref="box_content">
       <template v-for="item in list">
-        <image-item :data="item"></image-item>
+        <image-item :data="item" class="item-hook"></image-item>
       </template>
     </div>
-    <div class="select-area" v-show="Math.abs(select_area.endX - select_area.x) > 0 && Math.abs(select_area.endY - select_area.y) > 0 && select_area.status"
-      :style="`width: ${Math.abs(select_area.endX - select_area.x)}px; height: ${Math.abs(select_area.endY - select_area.y)}px; top: ${select_area.y}px; left: ${select_area.x}px`">
+    <div class="select-area" v-show="width > 0 && height > 0 && select_status"
+      :style="`width: ${width}px; height: ${height}px; top: ${posY}px; left: ${posX}px`">
     </div>
   </div>
 </template>
@@ -43,7 +43,13 @@ import list from './data.js'
     },
     data () {
       return {
-        status: false,
+        select_status: false, // 是否在勾选的状态
+        select_area: {
+          x: 0,
+          y: 0,
+          w: 0,
+          h: 0
+        },
         list: []
       }
     },
@@ -51,58 +57,105 @@ import list from './data.js'
       scrollHeight () {
         return this.$store.state.size.clientHeight - 144
       },
+      width () {
+        return Math.abs(this.select_area.w)
+      },
+      height () {
+        return Math.abs(this.select_area.h)
+      },
+      posX () {
+        if (this.select_area.w > 0) return this.select_area.x
+        else return this.select_area.w + this.select_area.x
+      },
+      posY () {
+        if (this.select_area.h > 0) return this.select_area.y
+        else return this.select_area.h + this.select_area.y
+      },
       ...mapState({
-        select_area: state => state.size.select_area
+        // select_area: state => state.size.select_area
       })
     },
     mounted () {
-      this.$refs.box_content.onmousedown = (e) => {
-        // console.log(e)
-        this.select_area_change({
-          status: true,
-          x: e.clientX,
-          y: e.clientY
-        })
-      }
-      this.$refs.box_content.onmousemove = (e) => {
-        if (this.select_area.status) {
-          // console.log(e)
-          this.select_area_change({
-            endX: e.clientX,
-            endY: e.clientY,
-            status: true
-          })
-        }
-      }
-      document.body.onmouseup = (e) => {
-        console.log(e)
-        this.select_area_change({
-          endX: 0,
-          endY: 0,
-          x: 0,
-          y: 0,
-          status: false
-        })
-      }
+      this.selectInit()
       for (let i = 0; i < list.length; i++) {
-        this.list.push({ ...list[i], selected: false })
-        this.list.push({ ...list[i], selected: false })
-        this.list.push({ ...list[i], selected: false })
-        this.list.push({ ...list[i], selected: false })
-        this.list.push({ ...list[i], selected: false })
-        this.list.push({ ...list[i], selected: false })
-        this.list.push({ ...list[i], selected: false })
-        this.list.push({ ...list[i], selected: false })
-        this.list.push({ ...list[i], selected: false })
-        this.list.push({ ...list[i], selected: false })
-        this.list.push({ ...list[i], selected: false })
-        this.list.push({ ...list[i], selected: false })
+        this.list.push({
+          ...list[i],
+          selected: false,
+          position: {
+            x: 0,
+            y: 0,
+            w: 0,
+            h: 0
+          }
+        })
       }
+      this.initPosition()
     },
     methods: {
       ...mapMutations({
         select_area_change: 'size/select_area_change'
-      })
+      }),
+      initPosition () {
+        this.$nextTick(() => {
+          let items = document.getElementsByClassName('item-hook')
+          this.list.forEach((item, i) => {
+            item.position = {
+              x: items[i].offsetLeft,
+              y: items[i].offsetTop,
+              w: items[i].clientWidth,
+              h: items[i].clientHeight
+            }
+          })
+          console.log(this.list)
+        })
+      },
+      selectInit () {
+        this.$refs.box_content.onmousedown = (e) => {
+          this.select_status = true
+          this.select_area = {
+            x: e.clientX,
+            y: e.clientY,
+            w: 0,
+            h: 0
+          }
+        }
+        document.onmousemove = (e) => {
+          if (this.select_status) {
+            this.select_area = {
+              x: this.select_area.x,
+              y: this.select_area.y,
+              w: e.clientX - this.select_area.x,
+              h: e.clientY - this.select_area.y
+            }
+            this.selectCheckItem(this.posX, this.posY, this.width, this.height)
+          }
+        }
+        document.onmouseup = (e) => {
+          console.log('鼠标松开了')
+          this.select_area = {
+            x: 0,
+            y: 0,
+            w: 0,
+            h: 0
+          }
+          this.select_status = false
+        }
+      },
+      selectCheckItem (sx, sy, sw, sh) { // 勾选是判断扫过的文件，参数为：选取坐标
+        let x1 = sx, x2 = sx + sw, y1 = sy, y2 = sy + sh
+        this.list.forEach(item => {
+          console.log(item)
+          let nx1 = item.position.x, nx2 = item.position.x + item.position.w, ny1 = item.position.y, ny2 = item.position.y + item.position.h
+          let arr = []
+          arr.push({x: nx1, y: ny1}, {x: nx1, y: ny2}, {x: nx2, y: ny1}, {x: nx2, y: ny2})
+          let status = this.some(arr, x1, x2, y1, y2)
+          if (status) item.selected = true
+          else item.selected = false
+        })
+      },
+      some (arr, x1, x2, y1, y2) {
+        return arr.some(item => (item.x > x1 && item.x < x2 && item.y > y1 && item.y < y2))
+      }
     }
   }
 </script>

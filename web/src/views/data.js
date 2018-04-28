@@ -1,5 +1,6 @@
 export default [
   {
+    id: 1,
     name : 'hahh',
     suffix : '',
     fullName : '2015014539',
@@ -11,6 +12,7 @@ export default [
     size : 1203,
     uploadTime : ''
   }, {
+    id: 2,
     name : 'hahh',
     suffix : '',
     fullName : '2015014539',
@@ -22,6 +24,7 @@ export default [
     size : 1203,
     uploadTime : ''
   }, {
+    id: 3,
     name : 'hahh',
     suffix : '',
     fullName : '2015014539',
@@ -33,6 +36,7 @@ export default [
     size : 1203,
     uploadTime : ''
   }, {
+    id: 4,
     name : 'hahh',
     suffix : '',
     fullName : '2015014539',
@@ -44,6 +48,7 @@ export default [
     size : 1203,
     uploadTime : ''
   }, {
+    id: 5,
     name : 'hahh',
     suffix : '',
     fullName : '2015014539',
@@ -55,6 +60,7 @@ export default [
     size : 1203,
     uploadTime : ''
   }, {
+    id:6,
     name : 'hahh',
     suffix : '',
     fullName : '2015014539',
@@ -66,6 +72,7 @@ export default [
     size : 1203,
     uploadTime : ''
   }, {
+    id: 7,
     name : 'hahh',
     suffix : '',
     fullName : '2015014539',

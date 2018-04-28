@@ -11,7 +11,6 @@ export default {
     clientWidth: 0,
     clientHeight: 0,
     select_area: {
-      status: false, // 是否开始勾选了
       x: 0,
       y: 0,
       endX: 0,
@@ -27,9 +26,8 @@ export default {
         state.clientHeight = document.body.clientHeight
       }
     },
-    select_area_change (state, {status, endX, endY, x, y}) {
-      console.log({status, endX, endY, x, y})
-      if (status) state.select_area.status = status
+    select_area_change (state, {endX, endY, x, y}) {
+      console.log(endX, endY, x, y)
       if (x) state.select_area.x = x
       if (y) state.select_area.y = y
       if (endY) state.select_area.endY = endY
