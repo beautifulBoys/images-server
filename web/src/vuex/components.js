@@ -8,17 +8,15 @@
 export default {
   namespaced: true,
   state: {
-    clientWidth: 0,
-    clientHeight: 0
+    contextMenu: {
+      status: false,
+      posX: 0,
+      posY: 0
+    }
   },
   mutations: {
-    clientSize (state, {clientWidth, clientHeight}) {
-      state.clientWidth = clientWidth
-      state.clientHeight = clientHeight
-      window.onresize = () => {
-        state.clientWidth = document.body.clientWidth
-        state.clientHeight = document.body.clientHeight
-      }
+    changeContextMenu (state, contextMenu) {
+      state.contextMenu = contextMenu
     }
   },
   actions: {

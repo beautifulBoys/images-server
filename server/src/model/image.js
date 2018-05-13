@@ -37,6 +37,10 @@ var Schemas = new mongoose.Schema({
       type: Number,
       default: 0
     },
+    status: { // 图片的状态： 1：正常 ，0：已删除，其他待定
+      type: String,
+      default: '1'
+    },
     uploadTime: {
       type: Date,
       default: new Date()

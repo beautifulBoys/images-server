@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 var Schemas = new mongoose.Schema({
     name: {
       type: String,
-      default: 0
+      default: ''
     },
     suffix: {
       type: String,
@@ -17,7 +17,11 @@ var Schemas = new mongoose.Schema({
       type: String,
       default: ''
     },
-    type: {
+    type: { // 文件类型 原生
+      type: String,
+      default: ''
+    },
+    fileType: { // 文件类型 名称
       type: String,
       default: ''
     },
@@ -36,6 +40,10 @@ var Schemas = new mongoose.Schema({
     size: {
       type: Number,
       default: 0
+    },
+    status: { // 图片的状态： 1：正常 ，0：已删除，其他待定
+      type: String,
+      default: '1'
     },
     uploadTime: {
       type: Date,

@@ -1,11 +1,15 @@
 import formidable from 'formidable'
 import fs from 'fs'
 import path from 'path'
-import sleep from 'sleep'
+import fileType from '../config/file_type.js'
+
 import Id from '../model/id.js'
-import User from '../model/user.js'
-import {saveImgList, rm} from '../lib/fs_func.js'
+import File from '../model/file.js'
+import {saveImgList, rm, mkdir, rename} from '../lib/fs_func.js'
 import Mq from '../lib/mq.js'
+import formDate from '../lib/formDate.js'
+
+import config from '../config/index.js'
 /*
 部分功能示例
   递归删除文件、目录及其内容
@@ -14,47 +18,63 @@ import Mq from '../lib/mq.js'
 
 */
 
-const mmmm = new Mq()
 
-async function fn (res, resolve, reject) {
-  await Id.update({type: 'userId'}, {$inc: {value: +1}}, {multi: false}, () => {})
-  let obj = await Id.findOne({type: 'userId'})
-  sleep.msleep(2000)
-  console.log('----------------停留了100毫秒----------------')
-  // 创建 user 表
-  User.create({id: obj.value + 1}, (err, docs) => {
-    if (err) {
-      reject(err)
-    } else {
-      resolve()
-      res.send({title: 'Express'})
-    }
-  });
-}
-function  FUN (res) {
-  return function () {
-    return new Promise((resolve, reject) => {
-      fn(res, resolve, reject)
-    })
-  }
-}
+export const uploadFunc = async (req, res) => {
+  let time = formDate.formatDateTime(new Date())
+  let dirName = time.year + time.month + time.day
+  let dirPath = path.join(config.resourceDir, '/' + dirName)
 
-export const uploadFunc = (req, res) => {
+  if (!fs.existsSync(dirPath)) fs.mkdirSync(dirPath)
+  
   var form = new formidable.IncomingForm()
-  form.uploadDir = path.join(__dirname, '../../linshi')
-  let npath = path.join(__dirname, '../../resource/')
+  form.uploadDir = config.tempDir
 
-  form.parse(req, (err, fields, files) => { // 已上传到临时文件夹
-    let result = saveImgList(files, npath)
+  form.parse(req, (err, fields, files) => { // 此时已上传到临时文件夹
+    let result = []
+    for (let key in files) {
+      let file = files[key]
+      let suffix = file.name.replace(/.+\./, '')
+      let fileName = file.name.replace(new RegExp(`.${suffix}`, 'ig'), '')
+      let obj = await Id.findOne({type: 'fileId'})
+      let newFileName = new Date().getTime().toString()
+      let newPath = path.join(dirPath, `/${newFileName}.${suffix}`)
+      try {
+        rename(file.path, newPath)
+        // File.create({
+        //   name: newFileName,
+        //   suffix,
+        //   fullName: file.name,
+        //   oldName: fileName,
+        //   type: file.type,
+        //   fileType: fileType[suffix] ? fileType[suffix].fileType : 'file',
+        //   path: newPath,
+        //   desc: '',
+        //   tag: '',
+        //   size: file.size
+        // })
+        res.send({code: 200, message: '保存成功'})
+      } catch (err) {
+        res.send({code: 200, message: '保存失败', err})
+
+      }
+      
+    }
     
-    res.send({title: 'Express', result})
 
   })
 }
 
 
 export const testFunc = async (req, res) => {
-  mmmm.set(new FUN(res))
-  // 现存偶发bug，跳id ，第一个 id 会重复。
-}
+  
+  var form = new formidable.IncomingForm()
+  form.uploadDir = path.join(__dirname, '../../image_cash/')
+  let npath = path.join(__dirname, '../../resource/')
 
+  form.parse(req, (err, fields, files) => { // 此时已上传到临时文件夹
+    let result = saveImgList(files, npath)
+    
+    res.send({title: 'Express', result})
+
+  })
+}

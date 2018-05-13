@@ -136,7 +136,7 @@ const { mapState, mapMutations, mapActions } = createNamespacedHelpers('box/head
     height: 60px;
     background: #eff4f8;
     // box-shadow: 0 5px 7px rgba(0,0,0,0.2);
-    z-index: 10;
+    // z-index: 10;
     padding: 10px;
     box-sizing: border-box;
     .item {

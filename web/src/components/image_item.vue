@@ -1,27 +1,58 @@
 <template>
-  <div class="item-box" :class="{selected: data.selected}">
+  <div class="item-box" :class="{selected: data.selected}" ref="image_item">
     <div class="item">
       <div class="gou" @click="data.selected = !data.selected"><i class="el-icon-check"></i></div>
-      <img v-if="data.type === '1'" class="image" src="../images/dir.png" />
-      <img v-if="data.type === '2'" class="image" src="../images/img.png" />
-      <img v-if="data.type === '3'" class="image" src="../images/doc.png" />
-      <img v-if="data.type === '4'" class="image" src="../images/video.png" />
-      <img v-if="data.type === '5'" class="image" src="../images/music.png" />
-      <img v-if="data.type === '6'" class="image" src="../images/zip.png" />
+      <img v-if="data.type === 'dir'" class="image" src="../images/dir.png" />
+      <img v-if="data.type === 'img'" class="image" src="../images/img.png" />
+      <img v-if="data.type === 'doc'" class="image" src="../images/doc.png" />
+      <img v-if="data.type === 'video'" class="image" src="../images/video.png" />
+      <img v-if="data.type === 'music'" class="image" src="../images/music.png" />
+      <img v-if="data.type === 'zip'" class="image" src="../images/zip.png" />
+      <img v-if="data.type === 'file'" class="image" src="../images/file.png" />
       <div class="text">{{data.fullName}}</div>
     </div>
   </div>
 </template>
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapMutations, mapActions, mapGetters } = createNamespacedHelpers('components')
   export default {
     props: ['data'],
     data () {
       return {
-        imgDom: null
+
       }
     },
-    created () {
+    computed: {
+      ...mapState({
 
+      })
+    },
+    mounted () {
+      this.$refs.image_item.addEventListener('contextmenu', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        this.$emit('selectOneItem')
+        this.changeContextMenu({
+          status: true,
+          posX: e.clientX,
+          posY: e.clientY
+        })
+      }, false)
+    },
+    beforeDestroy () {
+      this.$refs.image_item.removeEventListener('contextmenu', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        this.changeContextMenu({
+          status: false,
+          posX: 0,
+          posY: 0
+        })
+      }, false)
+    },
+    methods: {
+      ...mapMutations(['changeContextMenu'])
     }
   }
 </script>

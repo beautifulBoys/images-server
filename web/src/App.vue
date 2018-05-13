@@ -1,12 +1,28 @@
 <template>
   <div id="app">
     <router-view></router-view>
+    <context-menu :data.sync="contextMenu"></context-menu>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
+import contextMenuComponent from './components/context_menu.vue'
 export default {
   name: 'app',
+  components: {
+    'context-menu': contextMenuComponent
+  },
+  data () {
+    return {
+
+    }
+  },
+  computed: {
+    ...mapState({
+      contextMenu: state => state.components.contextMenu
+    })
+  },
   watch: {
     $route (n, o) {
       // if (!window.loginStatus) this.$router.push({path: '/login'});
@@ -17,7 +33,9 @@ export default {
       clientHeight: document.body.clientHeight,
       clientWidth: document.body.clientWidth
     })
-    document.oncontextmenu = () => {
+    document.oncontextmenu = (e) => {
+      e.stopPropagation()
+      e.preventDefault()
       return false
     }
   }

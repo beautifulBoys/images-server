@@ -62,9 +62,18 @@ const rm = (path) => {
   }
 }
 
+const mkdir = (dirPath) => {
+  return new Promise((resolve, reject) => {
+    fs.mkdir(dirPath, err => {
+      if (err) reject(err)
+      else resolve()
+   });
+  })
+}
 
 export {
   rename,
   saveImgList,
-  rm
+  rm,
+  mkdir
 }

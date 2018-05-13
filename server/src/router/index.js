@@ -11,13 +11,6 @@ router.post('/test', testFunc)
 
 
 
-
-
-
-
-
-
-
 export default (app) => {
   app.use('/', router)
 }
