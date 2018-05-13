@@ -1,6 +1,6 @@
 
 class Mq {
-  constructor(x, y) {
+  constructor() {
     this.list = []
     this.status = false
   }

@@ -1,8 +1,9 @@
 <template>
   <div class="home">
     <div class="header">
+      <input type="file" ref="file" multiple="multiple" />
       <el-button-group class="btn-group">
-        <el-button type="primary" size="small" icon="el-icon-upload2">上传</el-button>
+        <el-button type="primary" size="small" icon="el-icon-upload2" @click="uploadEvent()">上传</el-button>
       </el-button-group>
       <el-button-group class="btn-group">
         <el-button size="small" icon="el-icon-upload2">新建文件夹</el-button>
@@ -36,6 +37,7 @@
 <script>
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import imageItem from '../components/image_item.vue'
+import {uploadAjax, testAjax} from '../api/ajax_router.js'
 import list from './data.js'
   export default {
     components: {
@@ -95,6 +97,26 @@ import list from './data.js'
       ...mapMutations({
         select_area_change: 'size/select_area_change'
       }),
+      uploadEvent () {
+        var files = this.$refs.file.files
+        for (let i = 0; i < files.length; i++) {
+          var formData = new FormData()
+          formData.append('file', files[i])
+          uploadAjax(formData).then(res => {}).catch(err => {})
+        }
+      },
+      uploadEvent备份 () {
+        var files = this.$refs.file.files
+        var formData = new FormData()
+        for (let i = 0; i < files.length; i++) {
+          formData.append('file' + i, files[i])
+        }
+        uploadAjax(formData).then(res => {
+          console.log(res)
+        }).catch(err => {
+          console.log(err)
+        })
+      },
       initPosition () {
         this.$nextTick(() => {
           let items = document.getElementsByClassName('item-hook')

@@ -4,7 +4,7 @@ import path from 'path'
 // 修改名称
 const rename = (oldpath, newpath) => {
   return new Promise((resolve, reject) => {
-    fs.renameSync(oldpath, newpath, (err) => {
+    fs.rename(oldpath, newpath, (err) => {
       if (err) reject(err)
       else resolve()
     })

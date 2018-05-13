@@ -4,7 +4,7 @@ var Schemas = new mongoose.Schema({
     type: String,
     value: {
       type: Number,
-      default: 1
+      default: 1000
     }
 }, {
     versionKey: false
