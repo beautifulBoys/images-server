@@ -14,15 +14,18 @@ import {uploadAjax, testAjax} from '../api/ajax_router.js'
     methods: {
       upladFile () {
         var files = this.$refs.file.files
-        var formData = new FormData()
         for (let i = 0; i < files.length; i++) {
-          formData.append('file' + i, files[i])
+          var formData = new FormData()
+          formData.append('file', files[i])
+          function fn (e) {
+            console.log(files[i].name + ' 的进度', parseInt(100 * e.loaded / e.total) + '%')
+          }
+          uploadAjax(fn, formData).then(res => {
+            console.log(res)
+          }).catch(err => {
+            console.log(err)
+          })
         }
-        uploadAjax(formData).then(res => {
-          console.log(res)
-        }).catch(err => {
-          console.log(err)
-        })
       },
       cancleUploadFile () {
         this.xhr.abort()

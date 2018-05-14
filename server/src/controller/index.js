@@ -63,20 +63,25 @@ const uploadFn = async (res, fields, files, dirPath) => {
   })
 }
 
-export const uploadFunc = (req, res) => {
+export const uploadFunc = async (req, res) => {
   let time = formDate.formatDateTime(new Date())
   let dirName = time.year + time.month + time.day
   let dirPath = path.join(config.resourceDir, '/' + dirName)
 
-  if (!fs.existsSync(dirPath)) fs.mkdirSync(dirPath)
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath)
+    File.create({
+      name: dirName,
+      fileType: 'dir',
+      path: dirPath
+    })
+  }
   
   var form = new formidable.IncomingForm()
   form.uploadDir = config.tempDir
 
   form.parse(req, (err, fields, files) => { // 此时已上传到临时文件夹
     uploadFn(res, fields, files, dirPath)
-    
-
   })
 }
 

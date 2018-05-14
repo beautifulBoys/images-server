@@ -1,21 +1,21 @@
 export default {
     'jpeg': {
-        fileType: 'image'
+        fileType: 'img'
     },
     'png': {
-        fileType: 'image'
+        fileType: 'img'
     },
     'jpg': {
-        fileType: 'image'
+        fileType: 'img'
     },
     'gif': {
-        fileType: 'image'
+        fileType: 'img'
     },
     'webp': {
-        fileType: 'image'
+        fileType: 'img'
     },
     'bmp': {
-        fileType: 'image'
+        fileType: 'img'
     },
 
 
