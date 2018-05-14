@@ -102,7 +102,14 @@ import list from './data.js'
         for (let i = 0; i < files.length; i++) {
           var formData = new FormData()
           formData.append('file', files[i])
-          uploadAjax(formData).then(res => {}).catch(err => {})
+          function fn (e) {
+            console.log(files[i].name + ' 的进度', parseInt(100 * e.loaded / e.total) + '%')
+          }
+          uploadAjax(fn, formData).then(res => {
+            console.log(res)
+          }).catch(err => {
+            console.log(err)
+          })
         }
       },
       uploadEvent备份 () {
