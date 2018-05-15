@@ -32,16 +32,19 @@
     <div class="select-area" v-show="width > 0 && height > 0 && select_status"
       :style="`width: ${width}px; height: ${height}px; top: ${posY}px; left: ${posX}px`">
     </div>
+    <upload-dialog :data="uploadDialog"></upload-dialog>
   </div>
 </template>
 <script>
 import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import imageItem from '../components/image_item.vue'
+import uploadComponent from '../components/upload_dialog.vue'
 import {uploadAjax, testAjax} from '../api/ajax_router.js'
 import list from './data.js'
   export default {
     components: {
-      'image-item': imageItem
+      'image-item': imageItem,
+      'upload-dialog': uploadComponent
     },
     data () {
       return {
@@ -51,6 +54,10 @@ import list from './data.js'
           y: 0,
           w: 0,
           h: 0
+        },
+        uploadDialog: {
+          status: true,
+          path: ''
         },
         list: []
       }
@@ -99,18 +106,18 @@ import list from './data.js'
       }),
       uploadEvent () {
         var files = this.$refs.file.files
-        for (let i = 0; i < files.length; i++) {
+        files.forEach(item => {
           var formData = new FormData()
-          formData.append('file', files[i])
+          formData.append('file', item)
           function fn (e) {
-            console.log(files[i].name + ' 的进度', parseInt(100 * e.loaded / e.total) + '%')
+            console.log(item.name + ' 的进度', parseInt(100 * e.loaded / e.total) + '%')
           }
           uploadAjax(fn, formData).then(res => {
             console.log(res)
           }).catch(err => {
             console.log(err)
           })
-        }
+        })
       },
       uploadEvent备份 () {
         var files = this.$refs.file.files
