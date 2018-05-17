@@ -1,9 +1,8 @@
 <template>
   <div class="home">
     <div class="header">
-      <input type="file" ref="file" multiple="multiple" />
       <el-button-group class="btn-group">
-        <el-button type="primary" size="small" icon="el-icon-upload2" @click="uploadEvent()">上传</el-button>
+        <el-button type="primary" size="small" icon="el-icon-upload2" @click="uploadDialog.status = true">上传</el-button>
       </el-button-group>
       <el-button-group class="btn-group">
         <el-button size="small" icon="el-icon-upload2">新建文件夹</el-button>
@@ -56,7 +55,7 @@ import list from './data.js'
           h: 0
         },
         uploadDialog: {
-          status: true,
+          status: false,
           path: ''
         },
         list: []
